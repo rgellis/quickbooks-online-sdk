@@ -71,6 +71,12 @@ class EntitySpec(NamedTuple):
     required: tuple[str, ...]
     required_for_update: tuple[str, ...]
     conditionally_required: tuple[str, ...]
+    #: Fields QuickBooks will accept in a WHERE clause. Filtering by
+    #: anything else is rejected with an HTTP 400 that does not say why.
+    filterable: tuple[str, ...]
+    #: Fields QuickBooks will accept in ORDER BY. Notably excludes
+    #: AcctNum, so the chart of accounts cannot be sorted by number.
+    sortable: tuple[str, ...]
 
 
 #: Every entity the Accounting API documents, keyed by its API name.
@@ -89,6 +95,29 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         required=("Name",),
         required_for_update=("SyncToken",),
         conditionally_required=("AcctNum",),
+        filterable=(
+            "AccountSubType",
+            "AccountType",
+            "Active",
+            "Classification",
+            "CurrentBalance",
+            "CurrentBalanceWithSubAccounts",
+            "Description",
+            "FullyQualifiedName",
+            "Id",
+            "Name",
+            "ParentRef",
+            "SubAccount",
+        ),
+        sortable=(
+            "CurrentBalance",
+            "CurrentBalanceWithSubAccounts",
+            "Description",
+            "FullyQualifiedName",
+            "Name",
+            "ParentRef",
+            "SubAccount",
+        ),
     ),
     "Attachable": EntitySpec(
         name="Attachable",
@@ -109,6 +138,31 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         conditionally_required=(
             "FileName",
             "Note",
+        ),
+        filterable=(
+            "Category",
+            "ContentType",
+            "FileName",
+            "Id",
+            "Lat",
+            "Long",
+            "Note",
+            "PlaceName",
+            "Size",
+            "Tag",
+            "ThumbnailTempDownloadUri",
+        ),
+        sortable=(
+            "Category",
+            "ContentType",
+            "FileName",
+            "Lat",
+            "Long",
+            "Note",
+            "PlaceName",
+            "Size",
+            "Tag",
+            "ThumbnailTempDownloadUri",
         ),
     ),
     "Bill": EntitySpec(
@@ -132,6 +186,26 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
             "CurrencyRef",
             "GlobalTaxCalculation",
         ),
+        filterable=(
+            "APAccountRef",
+            "Balance",
+            "DocNumber",
+            "DueDate",
+            "Id",
+            "SalesTermRef",
+            "TotalAmt",
+            "TxnDate",
+            "VendorRef",
+        ),
+        sortable=(
+            "APAccountRef",
+            "DocNumber",
+            "DueDate",
+            "SalesTermRef",
+            "TotalAmt",
+            "TxnDate",
+            "VendorRef",
+        ),
     ),
     "BillPayment": EntitySpec(
         name="BillPayment",
@@ -153,6 +227,25 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         ),
         required_for_update=("SyncToken",),
         conditionally_required=("CurrencyRef",),
+        filterable=(
+            "APAccountRef",
+            "CheckPayment",
+            "CreditCardPayment",
+            "DocNumber",
+            "Id",
+            "TotalAmt",
+            "TxnDate",
+            "VendorRef",
+        ),
+        sortable=(
+            "APAccountRef",
+            "CheckPayment",
+            "CreditCardPayment",
+            "DocNumber",
+            "TotalAmt",
+            "TxnDate",
+            "VendorRef",
+        ),
     ),
     "Budget": EntitySpec(
         name="Budget",
@@ -172,6 +265,16 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         ),
         required_for_update=("SyncToken",),
         conditionally_required=(),
+        filterable=(
+            "Active",
+            "BudgetType",
+            "Id",
+            "Name",
+        ),
+        sortable=(
+            "BudgetType",
+            "Name",
+        ),
     ),
     "ChangeOrder": EntitySpec(
         name="ChangeOrder",
@@ -192,6 +295,17 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         ),
         required_for_update=("SyncToken",),
         conditionally_required=("BillEmail",),
+        filterable=(
+            "CustomerRef",
+            "DocNumber",
+            "Id",
+            "ProjectRef",
+            "TxnDate",
+        ),
+        sortable=(
+            "DocNumber",
+            "TxnDate",
+        ),
     ),
     "Class": EntitySpec(
         name="Class",
@@ -207,6 +321,17 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         required=("Name",),
         required_for_update=("SyncToken",),
         conditionally_required=("ParentRef",),
+        filterable=(
+            "Active",
+            "FullyQualifiedName",
+            "Id",
+            "MetaData",
+        ),
+        sortable=(
+            "Active",
+            "FullyQualifiedName",
+            "MetaData",
+        ),
     ),
     "CompanyCurrency": EntitySpec(
         name="CompanyCurrency",
@@ -222,6 +347,15 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         required=("Code",),
         required_for_update=("SyncToken",),
         conditionally_required=(),
+        filterable=(
+            "Active",
+            "Id",
+            "MetaData",
+        ),
+        sortable=(
+            "Active",
+            "MetaData",
+        ),
     ),
     "CompanyInfo": EntitySpec(
         name="CompanyInfo",
@@ -234,6 +368,8 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
             "CompanyAddr",
         ),
         conditionally_required=(),
+        filterable=("Id",),
+        sortable=(),
     ),
     "CreditCardPayment": EntitySpec(
         name="CreditCardPayment",
@@ -254,6 +390,12 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         ),
         required_for_update=("SyncToken",),
         conditionally_required=(),
+        filterable=(
+            "Id",
+            "TxnDate",
+            "VendorRef",
+        ),
+        sortable=("TxnDate",),
     ),
     "CreditMemo": EntitySpec(
         name="CreditMemo",
@@ -280,6 +422,20 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
             "ProjectRef",
             "BillEmail",
         ),
+        filterable=(
+            "Balance",
+            "CustomerRef",
+            "DocNumber",
+            "Id",
+            "ProjectRef",
+            "SalesTermRef",
+            "TxnDate",
+        ),
+        sortable=(
+            "Balance",
+            "DocNumber",
+            "TxnDate",
+        ),
     ),
     "Customer": EntitySpec(
         name="Customer",
@@ -302,6 +458,31 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
             "Suffix",
             "FamilyName",
         ),
+        filterable=(
+            "Active",
+            "Balance",
+            "CompanyName",
+            "DisplayName",
+            "FamilyName",
+            "FullyQualifiedName",
+            "GivenName",
+            "Id",
+            "MiddleName",
+            "PrimaryEmailAddr",
+            "PrintOnCheckName",
+        ),
+        sortable=(
+            "Active",
+            "Balance",
+            "BalanceWithJobs",
+            "CompanyName",
+            "DisplayName",
+            "FamilyName",
+            "FullyQualifiedName",
+            "GivenName",
+            "MiddleName",
+            "PrintOnCheckName",
+        ),
     ),
     "CustomerType": EntitySpec(
         name="CustomerType",
@@ -313,6 +494,15 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
             "Name",
         ),
         conditionally_required=(),
+        filterable=(
+            "Active",
+            "Id",
+            "MetaData",
+        ),
+        sortable=(
+            "Active",
+            "MetaData",
+        ),
     ),
     "Department": EntitySpec(
         name="Department",
@@ -328,6 +518,18 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         required=("Name",),
         required_for_update=("SyncToken",),
         conditionally_required=("ParentRef",),
+        filterable=(
+            "Active",
+            "FullyQualifiedName",
+            "Id",
+            "MetaData",
+        ),
+        sortable=(
+            "Active",
+            "FullyQualifiedName",
+            "MetaData",
+            "SubDepartment",
+        ),
     ),
     "Deposit": EntitySpec(
         name="Deposit",
@@ -350,6 +552,11 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
             "GlobalTaxCalculation",
             "CurrencyRef",
         ),
+        filterable=(
+            "Id",
+            "TxnDate",
+        ),
+        sortable=("TxnDate",),
     ),
     "Employee": EntitySpec(
         name="Employee",
@@ -365,6 +572,24 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         required=(),
         required_for_update=("SyncToken",),
         conditionally_required=("PrimaryAddr",),
+        filterable=(
+            "Active",
+            "DisplayName",
+            "FamilyName",
+            "GivenName",
+            "Id",
+            "MiddleName",
+            "PrintOnCheckName",
+            "Suffix",
+        ),
+        sortable=(
+            "DisplayName",
+            "FamilyName",
+            "GivenName",
+            "MiddleName",
+            "PrintOnCheckName",
+            "Suffix",
+        ),
     ),
     "Entitlements": EntitySpec(
         name="Entitlements",
@@ -373,6 +598,8 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         required=(),
         required_for_update=(),
         conditionally_required=(),
+        filterable=(),
+        sortable=(),
     ),
     "Estimate": EntitySpec(
         name="Estimate",
@@ -397,6 +624,19 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
             "ProjectRef",
             "BillEmail",
         ),
+        filterable=(
+            "CustomerRef",
+            "DocNumber",
+            "DueDate",
+            "Id",
+            "ProjectRef",
+            "TxnDate",
+        ),
+        sortable=(
+            "DocNumber",
+            "DueDate",
+            "TxnDate",
+        ),
     ),
     "Exchangerate": EntitySpec(
         name="Exchangerate",
@@ -410,6 +650,12 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
             "Rate",
         ),
         conditionally_required=(),
+        filterable=(
+            "AsOfDate",
+            "MetaData",
+            "SourceCurrencyCode",
+        ),
+        sortable=("MetaData",),
     ),
     "InventoryAdjustment": EntitySpec(
         name="InventoryAdjustment",
@@ -429,6 +675,8 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         ),
         required_for_update=("SyncToken",),
         conditionally_required=(),
+        filterable=("Id",),
+        sortable=(),
     ),
     "Invoice": EntitySpec(
         name="Invoice",
@@ -457,6 +705,22 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
             "ProjectRef",
             "BillEmail",
         ),
+        filterable=(
+            "Balance",
+            "CustomerRef",
+            "DocNumber",
+            "DueDate",
+            "Id",
+            "ProjectRef",
+            "SalesTermRef",
+            "TxnDate",
+        ),
+        sortable=(
+            "Balance",
+            "DocNumber",
+            "DueDate",
+            "TxnDate",
+        ),
     ),
     "Item": EntitySpec(
         name="Item",
@@ -477,6 +741,19 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
             "QtyOnHand",
             "AssetAccountRef",
         ),
+        filterable=(
+            "Active",
+            "FullyQualifiedName",
+            "Id",
+            "Name",
+            "Sku",
+            "Type",
+        ),
+        sortable=(
+            "Name",
+            "Type",
+            "UnitPrice",
+        ),
     ),
     "JournalEntry": EntitySpec(
         name="JournalEntry",
@@ -495,6 +772,15 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         conditionally_required=(
             "CurrencyRef",
             "GlobalTaxCalculation",
+        ),
+        filterable=(
+            "DocNumber",
+            "Id",
+            "TxnDate",
+        ),
+        sortable=(
+            "DocNumber",
+            "TxnDate",
         ),
     ),
     "Payment": EntitySpec(
@@ -520,6 +806,17 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
             "CurrencyRef",
             "ProjectRef",
         ),
+        filterable=(
+            "CustomerRef",
+            "Id",
+            "PaymentRefNum",
+            "ProjectRef",
+            "TxnDate",
+        ),
+        sortable=(
+            "PaymentRefNum",
+            "TxnDate",
+        ),
     ),
     "PaymentMethod": EntitySpec(
         name="PaymentMethod",
@@ -535,6 +832,11 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         required=("Name",),
         required_for_update=("SyncToken",),
         conditionally_required=(),
+        filterable=(
+            "Active",
+            "Id",
+        ),
+        sortable=("Active",),
     ),
     "Preferences": EntitySpec(
         name="Preferences",
@@ -543,6 +845,8 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         required=(),
         required_for_update=("SyncToken",),
         conditionally_required=(),
+        filterable=(),
+        sortable=(),
     ),
     "Purchase": EntitySpec(
         name="Purchase",
@@ -563,6 +867,15 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         ),
         required_for_update=("SyncToken",),
         conditionally_required=("CurrencyRef",),
+        filterable=(
+            "DocNumber",
+            "Id",
+            "TxnDate",
+        ),
+        sortable=(
+            "DocNumber",
+            "TxnDate",
+        ),
     ),
     "PurchaseOrder": EntitySpec(
         name="PurchaseOrder",
@@ -588,6 +901,17 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
             "CurrencyRef",
             "GlobalTaxCalculation",
         ),
+        filterable=(
+            "DocNumber",
+            "DueDate",
+            "Id",
+            "TxnDate",
+        ),
+        sortable=(
+            "DocNumber",
+            "DueDate",
+            "TxnDate",
+        ),
     ),
     "RecurringTransaction": EntitySpec(
         name="RecurringTransaction",
@@ -603,6 +927,13 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         required=("RecurringInfo",),
         required_for_update=("SyncToken",),
         conditionally_required=(),
+        filterable=(
+            "Id",
+            "MetaData",
+            "RecurDataRef",
+            "Type",
+        ),
+        sortable=("RecurDataRef",),
     ),
     "RefundReceipt": EntitySpec(
         name="RefundReceipt",
@@ -630,6 +961,25 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
             "ProjectRef",
             "BillEmail",
         ),
+        filterable=(
+            "Balance",
+            "CheckPayment",
+            "CreditCardPayment",
+            "CustomerRef",
+            "DocNumber",
+            "Id",
+            "PaymentType",
+            "ProjectRef",
+            "TxnDate",
+        ),
+        sortable=(
+            "Balance",
+            "CheckPayment",
+            "CreditCardPayment",
+            "DocNumber",
+            "PaymentType",
+            "TxnDate",
+        ),
     ),
     "ReimburseCharge": EntitySpec(
         name="ReimburseCharge",
@@ -642,6 +992,12 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         ),
         required_for_update=("SyncToken",),
         conditionally_required=("CurrencyRef",),
+        filterable=(
+            "CustomerRef",
+            "HasBeenInvoiced",
+            "Id",
+        ),
+        sortable=(),
     ),
     "SalesReceipt": EntitySpec(
         name="SalesReceipt",
@@ -669,6 +1025,20 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
             "ProjectRef",
             "BillEmail",
         ),
+        filterable=(
+            "Balance",
+            "CustomerRef",
+            "DocNumber",
+            "Id",
+            "ProjectRef",
+            "TotalAmt",
+            "TxnDate",
+        ),
+        sortable=(
+            "Balance",
+            "DocNumber",
+            "TxnDate",
+        ),
     ),
     "TaxAgency": EntitySpec(
         name="TaxAgency",
@@ -677,6 +1047,8 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         required=("DisplayName",),
         required_for_update=("SyncToken",),
         conditionally_required=(),
+        filterable=("Id",),
+        sortable=("DisplayName",),
     ),
     "TaxClassification": EntitySpec(
         name="TaxClassification",
@@ -685,6 +1057,8 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         required=("ParentRef",),
         required_for_update=(),
         conditionally_required=(),
+        filterable=(),
+        sortable=(),
     ),
     "TaxCode": EntitySpec(
         name="TaxCode",
@@ -696,6 +1070,16 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
             "PurchaseTaxRateList",
             "SalesTaxRateList",
         ),
+        filterable=(
+            "Active",
+            "Description",
+            "Id",
+            "Name",
+        ),
+        sortable=(
+            "Description",
+            "Name",
+        ),
     ),
     "TaxPayment": EntitySpec(
         name="TaxPayment",
@@ -704,6 +1088,11 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         required=(),
         required_for_update=("SyncToken",),
         conditionally_required=(),
+        filterable=(
+            "Id",
+            "MetaData",
+        ),
+        sortable=("MetaData",),
     ),
     "TaxRate": EntitySpec(
         name="TaxRate",
@@ -712,6 +1101,21 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         required=(),
         required_for_update=("SyncToken",),
         conditionally_required=(),
+        filterable=(
+            "Active",
+            "AgencyRef",
+            "Description",
+            "Id",
+            "Name",
+            "TaxReturnLineRef",
+        ),
+        sortable=(
+            "Active",
+            "AgencyRef",
+            "Description",
+            "Name",
+            "TaxReturnLineRef",
+        ),
     ),
     "TaxService": EntitySpec(
         name="TaxService",
@@ -723,6 +1127,8 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         ),
         required_for_update=(),
         conditionally_required=(),
+        filterable=(),
+        sortable=(),
     ),
     "Term": EntitySpec(
         name="Term",
@@ -738,6 +1144,15 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         required=("Name",),
         required_for_update=("SyncToken",),
         conditionally_required=(),
+        filterable=(
+            "Active",
+            "Id",
+            "Name",
+        ),
+        sortable=(
+            "Active",
+            "Name",
+        ),
     ),
     "TimeActivity": EntitySpec(
         name="TimeActivity",
@@ -765,6 +1180,13 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
             "EmployeeRef",
             "StartTime",
         ),
+        filterable=(
+            "BillableStatus",
+            "Id",
+            "ProjectRef",
+            "TxnDate",
+        ),
+        sortable=("TxnDate",),
     ),
     "Transfer": EntitySpec(
         name="Transfer",
@@ -785,6 +1207,11 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         ),
         required_for_update=("SyncToken",),
         conditionally_required=(),
+        filterable=(
+            "Id",
+            "TxnDate",
+        ),
+        sortable=("TxnDate",),
     ),
     "Vendor": EntitySpec(
         name="Vendor",
@@ -805,6 +1232,29 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
             "MiddleName",
             "Suffix",
             "FamilyName",
+        ),
+        filterable=(
+            "Active",
+            "Balance",
+            "CompanyName",
+            "DisplayName",
+            "FamilyName",
+            "GivenName",
+            "Id",
+            "MiddleName",
+            "PrintOnCheckName",
+            "Suffix",
+        ),
+        sortable=(
+            "Active",
+            "Balance",
+            "CompanyName",
+            "DisplayName",
+            "FamilyName",
+            "GivenName",
+            "MiddleName",
+            "PrintOnCheckName",
+            "Suffix",
         ),
     ),
     "VendorCredit": EntitySpec(
@@ -827,6 +1277,20 @@ ENTITIES: Final[Mapping[str, EntitySpec]] = {
         conditionally_required=(
             "GlobalTaxCalculation",
             "CurrencyRef",
+        ),
+        filterable=(
+            "APAccountRef",
+            "DocNumber",
+            "Id",
+            "TotalAmt",
+            "TxnDate",
+        ),
+        sortable=(
+            "APAccountRef",
+            "Balance",
+            "DocNumber",
+            "TotalAmt",
+            "TxnDate",
         ),
     ),
 }

@@ -133,7 +133,11 @@ class FileTokenStore:
     def _save_sync(self, tokens: TokenSet) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         payload = tokens.model_dump_json(indent=2)
-        with open(self._lock_path, "w", encoding="utf-8") as lock:
+        # The sidecar carries no content, but it sits beside a credential and
+        # should not be the one file in that directory anyone can read. Opened
+        # with an explicit mode rather than left to the umask.
+        lock_fd = os.open(self._lock_path, os.O_WRONLY | os.O_CREAT, 0o600)
+        with os.fdopen(lock_fd, "w", encoding="utf-8") as lock:
             fcntl.flock(lock.fileno(), fcntl.LOCK_EX)
             try:
                 fd, tmp_name = tempfile.mkstemp(

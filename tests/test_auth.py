@@ -235,3 +235,12 @@ class TestFileStore:
         path = tmp_path / "tokens.json"
         await FileTokenStore(path).save(_fresh_tokens())
         assert path.stat().st_mode & 0o077 == 0, "token file must be owner-only"
+
+    async def test_the_lock_sidecar_is_not_world_readable(self, tmp_path: Path) -> None:
+        """It holds nothing, but it sits next to a credential and should not be
+        the one readable file in that directory."""
+        store = FileTokenStore(tmp_path / "tokens.json")
+        await store.save(_fresh_tokens())
+        lock = tmp_path / "tokens.json.lock"
+        assert lock.exists()
+        assert lock.stat().st_mode & 0o077 == 0

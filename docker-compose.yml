@@ -14,6 +14,11 @@ services:
       # are never written into the macOS working tree.
       - venv:/app/.venv
       - uv-cache:/root/.cache/uv
+      # One shared token store across every tool on this machine. Intuit
+      # rotates the refresh token on each use and invalidates the previous one,
+      # so a second copy is not a cache -- it is a credential that will be
+      # silently killed the first time the other copy refreshes.
+      - ${HOME}/.quickbooks-online:/tokens
     env_file:
       - path: .env
         required: false

@@ -29,7 +29,16 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Final
 
-from docsource import as_dict, as_list, as_str, as_str_list, load
+from docsource import (
+    as_dict,
+    as_list,
+    as_str,
+    as_str_list,
+    load,
+)
+from docsource import (
+    field_name as _field_name,
+)
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
@@ -141,9 +150,16 @@ def read_docs() -> tuple[list[Doc], dict[str, Any], str]:
 
 
 def _requirements(models: dict[str, Any], ref: str) -> dict[str, tuple[str, ...]]:
-    """Documented field requirements for one model reference."""
+    """Documented field requirements and query capabilities for one model.
+
+    ``filterable`` and ``sortable`` matter more than they look. QuickBooks
+    rejects a query that filters or orders by a field it has not marked as
+    such, with an HTTP 400 whose body does not say which clause was at fault --
+    ordering the chart of accounts by AcctNum fails exactly this way. The flags
+    are documented per field, so the rejection is predictable locally.
+    """
     model = as_dict(models.get(ref))
-    return {
+    out: dict[str, tuple[str, ...]] = {
         attr: tuple(as_str_list(model.get(key)))
         for key, attr in (
             ("Required", "required"),
@@ -151,6 +167,20 @@ def _requirements(models: dict[str, Any], ref: str) -> dict[str, tuple[str, ...]
             ("ConditionallyRequired", "conditionally_required"),
         )
     }
+    filterable: list[str] = []
+    sortable: list[str] = []
+    for raw_name, raw_prop in as_dict(model.get("properties")).items():
+        name = _field_name(str(raw_name))
+        prop = as_dict(raw_prop)
+        if not name:
+            continue
+        if prop.get("filterable"):
+            filterable.append(name)
+        if prop.get("sortable"):
+            sortable.append(name)
+    out["filterable"] = tuple(sorted(set(filterable)))
+    out["sortable"] = tuple(sorted(set(sortable)))
+    return out
 
 
 def _fmt(values: tuple[str, ...], indent: str = "        ") -> str:
@@ -245,6 +275,12 @@ def render(docs: list[Doc], models: dict[str, Any], minor: str) -> str:
     add("    required: tuple[str, ...]")
     add("    required_for_update: tuple[str, ...]")
     add("    conditionally_required: tuple[str, ...]")
+    add("    #: Fields QuickBooks will accept in a WHERE clause. Filtering by")
+    add("    #: anything else is rejected with an HTTP 400 that does not say why.")
+    add("    filterable: tuple[str, ...]")
+    add("    #: Fields QuickBooks will accept in ORDER BY. Notably excludes")
+    add("    #: AcctNum, so the chart of accounts cannot be sorted by number.")
+    add("    sortable: tuple[str, ...]")
     add("")
     add("")
     add("#: Every entity the Accounting API documents, keyed by its API name.")
@@ -262,6 +298,8 @@ def render(docs: list[Doc], models: dict[str, Any], minor: str) -> str:
             f"        conditionally_required="
             f"{_fmt(req.get('conditionally_required', ()))},"
         )
+        add(f"        filterable={_fmt(req.get('filterable', ()))},")
+        add(f"        sortable={_fmt(req.get('sortable', ()))},")
         add("    ),")
     add("}")
     add("")
