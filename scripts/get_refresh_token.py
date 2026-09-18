@@ -45,7 +45,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 from qbo.auth import AuthClient as AuthClientRuntime  # noqa: E402
 from qbo.auth import FileTokenStore, TokenSet  # noqa: E402
 
-DEFAULT_TOKEN_STORE = "/data/qbo-tokens.json"
+#: Where the token lands when nothing says otherwise.
+#:
+#: A path under the user's home, not a container path: this script is part of a
+#: public package and most people running it are on a laptop, where /data does
+#: not exist and would not be writable. Deployments override it with
+#: QBO_TOKEN_STORE -- a container pointing at a mounted volume, for instance.
+DEFAULT_TOKEN_STORE = str(Path.home() / ".quickbooks-online" / "tokens.json")
 DEFAULT_REDIRECT_URI = "http://localhost:8000/callback"
 
 

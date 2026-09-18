@@ -44,7 +44,7 @@ class TestExtract:
 
     def test_https_redirect_url(self) -> None:
         code, realm = bootstrap._extract(
-            "https://quickbooks-mcp.rmgmedia.com/callback?code=AB11&realmId=9130347"
+            "https://books.example.com/quickbooks/callback?code=AB11&realmId=9130347"
         )
         assert (code, realm) == ("AB11", "9130347")
 
