@@ -1,0 +1,523 @@
+{
+  "Header": {
+    "ReportName": "GeneralLedger",
+    "Option": [
+      {
+        "Name": "NoReportData",
+        "Value": "false"
+      }
+    ],
+    "ReportBasis": "Accrual",
+    "StartPeriod": "2015-01-01",
+    "Currency": "USD",
+    "EndPeriod": "2015-06-30",
+    "Time": "2016-03-11T09:11:52-08:00"
+  },
+  "Rows": {
+    "Row": [
+      {
+        "Header": {
+          "ColData": [
+            {
+              "id": "82",
+              "value": "Design income"
+            },
+            {
+              "value": ""
+            }
+          ]
+        },
+        "Rows": {
+          "Row": [
+            {
+              "ColData": [
+                {
+                  "id": "82",
+                  "value": "Design income"
+                },
+                {
+                  "value": "225.0"
+                }
+              ],
+              "type": "Data"
+            },
+            {
+              "ColData": [
+                {
+                  "id": "82",
+                  "value": "Design income"
+                },
+                {
+                  "value": "750.0"
+                }
+              ],
+              "type": "Data"
+            }
+          ]
+        },
+        "type": "Section",
+        "Summary": {
+          "ColData": [
+            {
+              "value": "Total for Design income"
+            },
+            {
+              "value": "975.0"
+            }
+          ]
+        }
+      },
+      {
+        "Header": {
+          "ColData": [
+            {
+              "id": "86",
+              "value": "Discounts given"
+            },
+            {
+              "value": ""
+            }
+          ]
+        },
+        "Rows": {
+          "Row": [
+            {
+              "ColData": [
+                {
+                  "id": "86",
+                  "value": "Discounts given"
+                },
+                {
+                  "value": "-30.5"
+                }
+              ],
+              "type": "Data"
+            }
+          ]
+        },
+        "type": "Section",
+        "Summary": {
+          "ColData": [
+            {
+              "value": "Total for Discounts given"
+            },
+            {
+              "value": "-30.5"
+            }
+          ]
+        }
+      },
+      {
+        "Header": {
+          "ColData": [
+            {
+              "id": "48",
+              "value": "Job Materials"
+            },
+            {
+              "value": ""
+            }
+          ]
+        },
+        "Rows": {
+          "Row": [
+            {
+              "Header": {
+                "ColData": [
+                  {
+                    "value": "Fountains and Garden Lighting"
+                  },
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              "Rows": {
+                "Row": [
+                  {
+                    "ColData": [
+                      {
+                        "id": "48",
+                        "value": "Landscaping Services:Job Materials:Fountains and Garden Lighting"
+                      },
+                      {
+                        "value": "275.0"
+                      }
+                    ],
+                    "type": "Data"
+                  },
+                  {
+                    "ColData": [
+                      {
+                        "id": "48",
+                        "value": "Landscaping Services:Job Materials:Fountains and Garden Lighting"
+                      },
+                      {
+                        "value": "275.0"
+                      }
+                    ],
+                    "type": "Data"
+                  }
+                ]
+              },
+              "type": "Section",
+              "Summary": {
+                "ColData": [
+                  {
+                    "value": "Total for Fountains and Garden Lighting"
+                  },
+                  {
+                    "value": "1295.0"
+                  }
+                ]
+              }
+            },
+            {
+              "Header": {
+                "ColData": [
+                  {
+                    "id": "49",
+                    "value": "Plants and Soil"
+                  },
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              "Rows": {
+                "Row": [
+                  {
+                    "ColData": [
+                      {
+                        "id": "49",
+                        "value": "Landscaping Services:Job Materials:Plants and Soil"
+                      },
+                      {
+                        "value": "131.25"
+                      }
+                    ],
+                    "type": "Data"
+                  },
+                  {
+                    "ColData": [
+                      {
+                        "id": "49",
+                        "value": "Landscaping Services:Job Materials:Plants and Soil"
+                      },
+                      {
+                        "value": "150.0"
+                      }
+                    ],
+                    "type": "Data"
+                  },
+                  {
+                    "ColData": [
+                      {
+                        "id": "49",
+                        "value": "Landscaping Services:Job Materials:Plants and Soil"
+                      },
+                      {
+                        "value": "-24.36"
+                      }
+                    ],
+                    "type": "Data"
+                  },
+                  {
+                    "ColData": [
+                      {
+                        "id": "49",
+                        "value": "Landscaping Services:Job Materials:Plants and Soil"
+                      },
+                      {
+                        "value": "1750.0"
+                      }
+                    ],
+                    "type": "Data"
+                  },
+                  {
+                    "ColData": [
+                      {
+                        "id": "49",
+                        "value": "Landscaping Services:Job Materials:Plants and Soil"
+                      },
+                      {
+                        "value": "-54.92"
+                      }
+                    ],
+                    "type": "Data"
+                  }
+                ]
+              },
+              "type": "Section",
+              "Summary": {
+                "ColData": [
+                  {
+                    "value": "Total for Plants and Soil"
+                  },
+                  {
+                    "value": "1951.97"
+                  }
+                ]
+              }
+            },
+            {
+              "Header": {
+                "ColData": [
+                  {
+                    "id": "50",
+                    "value": "Sprinklers and Drip Systems"
+                  },
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              "Rows": {
+                "Row": [
+                  {
+                    "ColData": [
+                      {
+                        "id": "50",
+                        "value": "Landscaping Services:Job Materials:Sprinklers and Drip Systems"
+                      },
+                      {
+                        "value": "60.0"
+                      }
+                    ],
+                    "type": "Data"
+                  },
+                  {
+                    "ColData": [
+                      {
+                        "id": "50",
+                        "value": "Landscaping Services:Job Materials:Sprinklers and Drip Systems"
+                      },
+                      {
+                        "value": "48.0"
+                      }
+                    ],
+                    "type": "Data"
+                  },
+                  {
+                    "ColData": [
+                      {
+                        "id": "50",
+                        "value": "Landscaping Services:Job Materials:Sprinklers and Drip Systems"
+                      },
+                      {
+                        "value": "30.0"
+                      }
+                    ],
+                    "type": "Data"
+                  }
+                ]
+              },
+              "type": "Section",
+              "Summary": {
+                "ColData": [
+                  {
+                    "value": "Total for Sprinklers and Drip Systems"
+                  },
+                  {
+                    "value": "138.0"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "type": "Section",
+        "Summary": {
+          "ColData": [
+            {
+              "value": "Total for Job Materials"
+            },
+            {
+              "value": "3384.97"
+            }
+          ]
+        }
+      },
+      {
+        "Header": {
+          "ColData": [
+            {
+              "id": "53",
+              "value": "Labor"
+            },
+            {
+              "value": ""
+            }
+          ]
+        },
+        "Rows": {
+          "Row": [
+            {
+              "Header": {
+                "ColData": [
+                  {
+                    "value": "Maintenance and Repair"
+                  },
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              "Rows": {
+                "Row": [
+                  {
+                    "ColData": [
+                      {
+                        "id": "53",
+                        "value": "Landscaping Services:Labor:Maintenance and Repair"
+                      },
+                      {
+                        "value": "50.0"
+                      }
+                    ],
+                    "type": "Data"
+                  }
+                ]
+              },
+              "type": "Section",
+              "Summary": {
+                "ColData": [
+                  {
+                    "value": "Total for Maintenance and Repair"
+                  },
+                  {
+                    "value": "50.0"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "type": "Section",
+        "Summary": {
+          "ColData": [
+            {
+              "value": "Total for Labor"
+            },
+            {
+              "value": "50.0"
+            }
+          ]
+        }
+      },
+      {
+        "type": "Section",
+        "Summary": {
+          "ColData": [
+            {
+              "value": "accountsTotal for Landscaping Services with sub-accounts."
+            },
+            {
+              "value": "4474.97"
+            }
+          ]
+        }
+      },
+      {
+        "Header": {
+          "ColData": [
+            {
+              "id": "54",
+              "value": "Pest Control Services"
+            },
+            {
+              "value": ""
+            }
+          ]
+        },
+        "Rows": {
+          "Row": [
+            {
+              "ColData": [
+                {
+                  "id": "54",
+                  "value": "Pest Control Services"
+                },
+                {
+                  "value": "35.0"
+                }
+              ],
+              "type": "Data"
+            },
+            {
+              "ColData": [
+                {
+                  "id": "54",
+                  "value": "Pest Control Services"
+                },
+                {
+                  "value": "35.0"
+                }
+              ],
+              "type": "Data"
+            },
+            {
+              "ColData": [
+                {
+                  "id": "54",
+                  "value": "Pest Control Services"
+                },
+                {
+                  "value": "35.0"
+                }
+              ],
+              "type": "Data"
+            },
+            {
+              "ColData": [
+                {
+                  "id": "54",
+                  "value": "Pest Control Services"
+                },
+                {
+                  "value": "35.0"
+                }
+              ],
+              "type": "Data"
+            },
+            {
+              "ColData": [
+                {
+                  "id": "54",
+                  "value": "Pest Control Services"
+                },
+                {
+                  "value": "-100.0"
+                }
+              ],
+              "type": "Data"
+            }
+          ]
+        },
+        "type": "Section",
+        "Summary": {
+          "ColData": [
+            {
+              "value": "Total for Pest Control Services"
+            },
+            {
+              "value": "40.0"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "Columns": {
+    "Column": [
+      {
+        "ColType": "account_name",
+        "ColTitle": "Account"
+      },
+      {
+        "ColType": "subt_nat_amount",
+        "ColTitle": "Amount"
+      }
+    ]
+  }
+}

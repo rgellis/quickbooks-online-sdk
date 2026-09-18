@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Host entry point. Requires only Docker -- no Python, uv or Homebrew.
+#
+#   ./scripts/dev check           ruff format + ruff check + pyright + pytest
+#   ./scripts/dev test [args...]  pytest, args passed through
+#   ./scripts/dev lint            ruff only
+#   ./scripts/dev types           pyright only
+#   ./scripts/dev shell           interactive shell
+#   ./scripts/dev run <cmd...>    arbitrary command via uv run
+#   ./scripts/dev sync            re-resolve dependencies
+set -euo pipefail
+cd "$(dirname "${0}")/.."
+
+compose() { docker compose "${@}"; }
+in_dev()  { compose run --rm dev "${@}"; }
+
+cmd="${1:-check}"
+shift || true
+
+case "${cmd}" in
+  check)  in_dev ./scripts/typecheck.sh ;;
+  test)   in_dev uv run pytest "${@}" ;;
+  lint)   in_dev bash -c 'uv run ruff format . && uv run ruff check . --fix' ;;
+  types)  in_dev uv run pyright ;;
+  shell)  in_dev bash ;;
+  run)    in_dev uv run "${@}" ;;
+  sync)   compose build --no-cache dev ;;
+  *)      echo "unknown command: ${cmd}" >&2; sed -n '3,12p' "${0}"; exit 1 ;;
+esac

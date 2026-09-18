@@ -1,0 +1,28 @@
+# Secrets and token state -- never commit
+.env
+.env.*
+!.env.example
+*.token.json
+tokens/
+.qbo-tokens.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Unredacted fixtures -- only redacted ones are committed
+tests/fixtures/live/
+*.live.json
+
+logs/
+.DS_Store

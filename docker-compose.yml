@@ -1,0 +1,27 @@
+# Dev/test environment. The host needs only Docker.
+#
+#   ./scripts/dev check          lint, typecheck, test
+#   ./scripts/dev test -k paging run a subset
+#   ./scripts/dev shell          interactive shell in the container
+#
+services:
+  dev:
+    build: .
+    working_dir: /app
+    volumes:
+      - .:/app
+      # Keep the virtualenv and uv cache out of the bind mount so Linux wheels
+      # are never written into the macOS working tree.
+      - venv:/app/.venv
+      - uv-cache:/root/.cache/uv
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      PYTHONPATH: /app
+    stdin_open: true
+    tty: true
+
+volumes:
+  venv:
+  uv-cache:

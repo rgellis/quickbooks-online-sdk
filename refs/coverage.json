@@ -1,0 +1,325 @@
+{
+  "aliases": {
+    "CreditCardPayment": "CreditCardPaymentTxn",
+    "Exchangerate": "ExchangeRate"
+  },
+  "docs_only": [
+    "Entitlements",
+    "TaxService"
+  ],
+  "documented_entities": [
+    "Account",
+    "Attachable",
+    "Bill",
+    "BillPayment",
+    "Budget",
+    "ChangeOrder",
+    "Class",
+    "CompanyCurrency",
+    "CompanyInfo",
+    "CreditCardPayment",
+    "CreditMemo",
+    "Customer",
+    "CustomerType",
+    "Department",
+    "Deposit",
+    "Employee",
+    "Entitlements",
+    "Estimate",
+    "Exchangerate",
+    "InventoryAdjustment",
+    "Invoice",
+    "Item",
+    "JournalEntry",
+    "Payment",
+    "PaymentMethod",
+    "Preferences",
+    "Purchase",
+    "PurchaseOrder",
+    "RecurringTransaction",
+    "RefundReceipt",
+    "ReimburseCharge",
+    "SalesReceipt",
+    "TaxAgency",
+    "TaxClassification",
+    "TaxCode",
+    "TaxPayment",
+    "TaxRate",
+    "TaxService",
+    "Term",
+    "TimeActivity",
+    "Transfer",
+    "Vendor",
+    "VendorCredit"
+  ],
+  "documented_reports": {
+    "APAgingDetail": {
+      "route": "AgedPayableDetail",
+      "variants": []
+    },
+    "APAgingSummary": {
+      "route": "AgedPayables",
+      "variants": []
+    },
+    "ARAgingDetail": {
+      "route": "AgedReceivableDetail",
+      "variants": []
+    },
+    "ARAgingSummary": {
+      "route": "AgedReceivables",
+      "variants": []
+    },
+    "AccountListDetail": {
+      "route": "AccountList",
+      "variants": []
+    },
+    "BalanceSheet": {
+      "route": "BalanceSheet",
+      "variants": []
+    },
+    "CashFlow": {
+      "route": "CashFlow",
+      "variants": []
+    },
+    "CustomerBalance": {
+      "route": "CustomerBalance",
+      "variants": []
+    },
+    "CustomerBalanceDetail": {
+      "route": "CustomerBalanceDetail",
+      "variants": []
+    },
+    "CustomerIncome": {
+      "route": "CustomerIncome",
+      "variants": []
+    },
+    "GeneralLedger": {
+      "route": "GeneralLedger",
+      "variants": []
+    },
+    "InventoryValuationDetail": {
+      "route": "InventoryValuationDetail",
+      "variants": []
+    },
+    "InventoryValuationSummary": {
+      "route": "InventoryValuationSummary",
+      "variants": []
+    },
+    "JournalReport": {
+      "route": "JournalReport",
+      "variants": []
+    },
+    "ProfitAndLoss": {
+      "route": "ProfitAndLoss",
+      "variants": []
+    },
+    "ProfitAndLossDetail": {
+      "route": "ProfitAndLossDetail",
+      "variants": []
+    },
+    "SalesByClassSummary": {
+      "route": "ClassSales",
+      "variants": []
+    },
+    "SalesByCustomer": {
+      "route": "CustomerSales",
+      "variants": []
+    },
+    "SalesByDepartment": {
+      "route": "DepartmentSales",
+      "variants": []
+    },
+    "SalesByProduct": {
+      "route": "ItemSales",
+      "variants": []
+    },
+    "TaxSummary": {
+      "route": "TaxSummary",
+      "variants": []
+    },
+    "TransactionList": {
+      "route": "TransactionList",
+      "variants": []
+    },
+    "TransactionListByCustomer": {
+      "route": "TransactionListByCustomer",
+      "variants": []
+    },
+    "TransactionListByVendor": {
+      "route": "TransactionListByVendor",
+      "variants": []
+    },
+    "TransactionListWithSplits": {
+      "route": "TransactionListWithSplits",
+      "variants": []
+    },
+    "TrialBalance": {
+      "route": "TrialBalance",
+      "variants": [
+        "TrialBalanceFR"
+      ]
+    },
+    "VendorBalance": {
+      "route": "VendorBalance",
+      "variants": []
+    },
+    "VendorBalanceDetail": {
+      "route": "VendorBalanceDetail",
+      "variants": []
+    },
+    "VendorExpenses": {
+      "route": "VendorExpenses",
+      "variants": []
+    }
+  },
+  "field_gaps": {
+    "BillPayment": {
+      "documented_but_absent_from_xsd": [
+        "ProcessBillPayment"
+      ]
+    },
+    "Budget": {
+      "documented_but_absent_from_xsd": [
+        "CustomExtensions"
+      ]
+    },
+    "JournalEntry": {
+      "documented_but_absent_from_xsd": [
+        "TaxRateRef"
+      ]
+    },
+    "Payment": {
+      "documented_but_absent_from_xsd": [
+        "TaxExemptionRef"
+      ]
+    },
+    "RecurringTransaction": {
+      "documented_but_absent_from_xsd": [
+        "RecurDataRef",
+        "RecurringInfo",
+        "Type"
+      ]
+    },
+    "TaxPayment": {
+      "documented_but_absent_from_xsd": [
+        "TxnDate"
+      ]
+    },
+    "TimeActivity": {
+      "documented_but_absent_from_xsd": [
+        "BreakHours BreakMinutes"
+      ]
+    }
+  },
+  "generated_at": "2026-09-18T05:17:18+00:00",
+  "sources": {
+    "dotnet": {
+      "entity_count": 68,
+      "missing_files": []
+    },
+    "java": {
+      "entity_count": 68,
+      "missing_files": []
+    }
+  },
+  "xsd_entities": [
+    "Account",
+    "Attachable",
+    "Bill",
+    "BillPayment",
+    "BooleanTypeCustomFieldDefinition",
+    "Budget",
+    "ChangeOrder",
+    "ChargeCredit",
+    "Class",
+    "Company",
+    "CompanyCurrency",
+    "CompanyInfo",
+    "CreditCardPaymentTxn",
+    "CreditMemo",
+    "CustomFieldDefinition",
+    "Customer",
+    "CustomerType",
+    "DateTypeCustomFieldDefinition",
+    "Department",
+    "Deposit",
+    "EmailDeliveryInfo",
+    "Employee",
+    "Estimate",
+    "ExchangeRate",
+    "FixedAsset",
+    "InventoryAdjustment",
+    "InventorySite",
+    "Invoice",
+    "Item",
+    "JournalCode",
+    "JournalEntry",
+    "MasterAccount",
+    "NumberTypeCustomFieldDefinition",
+    "OtherName",
+    "Payment",
+    "PaymentMethod",
+    "Preferences",
+    "PriceLevel",
+    "Purchase",
+    "PurchaseOrder",
+    "QbdtEntityIdMapping",
+    "RecurringTransaction",
+    "RefundReceipt",
+    "ReimburseCharge",
+    "SalesOrder",
+    "SalesReceipt",
+    "SalesRep",
+    "StatementCharge",
+    "Status",
+    "StringTypeCustomFieldDefinition",
+    "SyncActivity",
+    "TDSMetadata",
+    "Tag",
+    "Task",
+    "TaxAgency",
+    "TaxClassification",
+    "TaxCode",
+    "TaxPayment",
+    "TaxRate",
+    "TaxReturn",
+    "Term",
+    "TimeActivity",
+    "Transfer",
+    "UserAlert",
+    "Vendor",
+    "VendorCredit",
+    "VendorPrepayment",
+    "VendorType"
+  ],
+  "xsd_only": [
+    "BooleanTypeCustomFieldDefinition",
+    "ChargeCredit",
+    "Company",
+    "CustomFieldDefinition",
+    "DateTypeCustomFieldDefinition",
+    "EmailDeliveryInfo",
+    "FixedAsset",
+    "InventorySite",
+    "JournalCode",
+    "MasterAccount",
+    "NumberTypeCustomFieldDefinition",
+    "OtherName",
+    "PriceLevel",
+    "QbdtEntityIdMapping",
+    "SalesOrder",
+    "SalesRep",
+    "StatementCharge",
+    "Status",
+    "StringTypeCustomFieldDefinition",
+    "SyncActivity",
+    "TDSMetadata",
+    "Tag",
+    "Task",
+    "TaxReturn",
+    "UserAlert",
+    "VendorPrepayment",
+    "VendorType"
+  ],
+  "xsd_source_disagreements": {}
+}

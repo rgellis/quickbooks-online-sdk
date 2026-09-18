@@ -1,0 +1,96 @@
+{
+  "Header": {
+    "ReportName": "TrialBalance",
+    "Option": [
+      {
+        "Name": "NoReportData",
+        "Value": "false"
+      }
+    ],
+    "DateMacro": "this month-to-date",
+    "ReportBasis": "Accrual",
+    "StartPeriod": "2016-03-01",
+    "Currency": "USD",
+    "EndPeriod": "2016-03-14",
+    "Time": "2016-03-14T10:11:07-07:00"
+  },
+  "Rows": {
+    "Row": [
+      {
+        "ColData": [
+          {
+            "id": "35",
+            "value": "Checking"
+          },
+          {
+            "value": "4151.74"
+          },
+          {
+            "value": ""
+          }
+        ]
+      },
+      {
+        "ColData": [
+          {
+            "id": "13",
+            "value": "Meals and Entertainment"
+          },
+          {
+            "value": ""
+          },
+          {
+            "value": "46.00"
+          }
+        ]
+      },
+      {
+        "ColData": [
+          {
+            "id": "93",
+            "value": "QuickBooks Payments Fees"
+          },
+          {
+            "value": "0.44"
+          },
+          {
+            "value": ""
+          }
+        ]
+      },
+      {
+        "group": "GrandTotal",
+        "type": "Section",
+        "Summary": {
+          "ColData": [
+            {
+              "value": "TOTAL"
+            },
+            {
+              "value": "36587.47"
+            },
+            {
+              "value": "36587.47"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "Columns": {
+    "Column": [
+      {
+        "ColType": "Account",
+        "ColTitle": ""
+      },
+      {
+        "ColType": "Money",
+        "ColTitle": "Debit"
+      },
+      {
+        "ColType": "Money",
+        "ColTitle": "Credit"
+      }
+    ]
+  }
+}

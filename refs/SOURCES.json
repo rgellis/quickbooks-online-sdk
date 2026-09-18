@@ -1,0 +1,84 @@
+{
+  "fetched_at": "2026-09-18T05:17:06+00:00",
+  "note": "Intuit publishes no OpenAPI/discovery document for the Accounting API v3. 'docs' is the JSON the developer portal itself renders and is the primary source; the XSDs come from Intuit's own SDK repositories and are used as a cross-check. All three disagree in places -- see API_COVERAGE.md.",
+  "sources": {
+    "docs": {
+      "base_url": "https://static.developer.intuit.com/JSONObjects",
+      "files": {
+        "EntityJsonObject_v1.json": {
+          "bytes": 387314,
+          "url": "https://static.developer.intuit.com/JSONObjects/EntityJsonObject_v1.json"
+        },
+        "CodesModelsJsonObjects_v2.json": {
+          "bytes": 1216859,
+          "url": "https://static.developer.intuit.com/JSONObjects/CodesModelsJsonObjects_v2.json",
+          "filtered": "dropped section(s): codes"
+        },
+        "TocJsonObject_v1.json": {
+          "bytes": 11954,
+          "url": "https://static.developer.intuit.com/JSONObjects/TocJsonObject_v1.json"
+        },
+        "QboMinorVersions.json": {
+          "bytes": 126,
+          "url": "https://static.developer.intuit.com/JSONObjects/QboMinorVersions.json"
+        }
+      }
+    },
+    "dotnet": {
+      "repo": "intuit/QuickBooks-V3-DotNET-SDK",
+      "branch": "master",
+      "resolved": "default branch, from the GitHub API",
+      "commit": "57a6abfbe92d",
+      "files": {
+        "Finance.xsd": {
+          "bytes": 532321,
+          "url": "https://raw.githubusercontent.com/intuit/QuickBooks-V3-DotNET-SDK/master/IPPDotNetDevKitCSV3/Tools/XsdExtension/Intuit.Ipp.XsdExtension/Schema/Finance.xsd"
+        },
+        "IntuitBaseTypes.xsd": {
+          "bytes": 68532,
+          "url": "https://raw.githubusercontent.com/intuit/QuickBooks-V3-DotNET-SDK/master/IPPDotNetDevKitCSV3/Tools/XsdExtension/Intuit.Ipp.XsdExtension/Schema/IntuitBaseTypes.xsd"
+        },
+        "IntuitNamesTypes.xsd": {
+          "bytes": 63507,
+          "url": "https://raw.githubusercontent.com/intuit/QuickBooks-V3-DotNET-SDK/master/IPPDotNetDevKitCSV3/Tools/XsdExtension/Intuit.Ipp.XsdExtension/Schema/IntuitNamesTypes.xsd"
+        },
+        "IntuitRestServiceDef.xsd": {
+          "bytes": 41981,
+          "url": "https://raw.githubusercontent.com/intuit/QuickBooks-V3-DotNET-SDK/master/IPPDotNetDevKitCSV3/Tools/XsdExtension/Intuit.Ipp.XsdExtension/Schema/IntuitRestServiceDef.xsd"
+        },
+        "Report.xsd": {
+          "bytes": 16718,
+          "url": "https://raw.githubusercontent.com/intuit/QuickBooks-V3-DotNET-SDK/master/IPPDotNetDevKitCSV3/Tools/XsdExtension/Intuit.Ipp.XsdExtension/Schema/Report.xsd"
+        }
+      }
+    },
+    "java": {
+      "repo": "intuit/QuickBooks-V3-Java-SDK",
+      "branch": "develop",
+      "resolved": "default branch, from the GitHub API",
+      "commit": "c4d5dfad23ff",
+      "files": {
+        "Finance.xsd": {
+          "bytes": 532321,
+          "url": "https://raw.githubusercontent.com/intuit/QuickBooks-V3-Java-SDK/develop/ipp-v3-java-data/src/main/xsd/Finance.xsd"
+        },
+        "IntuitBaseTypes.xsd": {
+          "bytes": 68532,
+          "url": "https://raw.githubusercontent.com/intuit/QuickBooks-V3-Java-SDK/develop/ipp-v3-java-data/src/main/xsd/IntuitBaseTypes.xsd"
+        },
+        "IntuitNamesTypes.xsd": {
+          "bytes": 63507,
+          "url": "https://raw.githubusercontent.com/intuit/QuickBooks-V3-Java-SDK/develop/ipp-v3-java-data/src/main/xsd/IntuitNamesTypes.xsd"
+        },
+        "IntuitRestServiceDef.xsd": {
+          "bytes": 41981,
+          "url": "https://raw.githubusercontent.com/intuit/QuickBooks-V3-Java-SDK/develop/ipp-v3-java-data/src/main/xsd/IntuitRestServiceDef.xsd"
+        },
+        "Report.xsd": {
+          "bytes": 16718,
+          "url": "https://raw.githubusercontent.com/intuit/QuickBooks-V3-Java-SDK/develop/ipp-v3-java-data/src/main/xsd/Report.xsd"
+        }
+      }
+    }
+  }
+}
