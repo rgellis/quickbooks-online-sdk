@@ -135,6 +135,24 @@ store. Nothing listens on a port, so it works unchanged inside a container.
 
 `--print-token` emits only the refresh token on stdout, for seeding a deployment.
 
+## Writes
+
+Permitted by default. This is a library: the caller decides.
+
+```python
+client = QboClient(realm_id=..., auth=...)                   # writes work
+client = QboClient(realm_id=..., auth=..., read_only=True)   # writes refused
+```
+
+`read_only=True` refuses every mutating method before a request is built, and
+says so plainly rather than failing at the API. Anything running unattended
+against a live ledger should set it.
+
+Note this is the opposite default from
+[`quickbooks-online-mcp`](https://github.com/rgellis/quickbooks-online-mcp),
+which refuses writes unless told otherwise — a model calling tools is a
+different proposition from code someone wrote on purpose.
+
 ## Requirements
 
 Docker. Nothing else — no Python, `uv` or Homebrew on the host.
