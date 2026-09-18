@@ -4,7 +4,9 @@
 !.env.example
 *.token.json
 tokens/
-.qbo-tokens.json
+# The store and the advisory-lock sidecar FileTokenStore writes beside it.
+.qbo-tokens.json*
+*.qbo-tokens.json*
 
 # Python
 __pycache__/

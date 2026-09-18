@@ -81,7 +81,16 @@ class TestExtract:
 
 
 class TestEnvironment:
-    def test_missing_credentials_name_what_to_do(self) -> None:
+    def test_missing_credentials_name_what_to_do(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        """Explicitly unset rather than assuming the variable is absent.
+
+        docker-compose loads .env into the container, so once real credentials
+        exist this passes for the wrong reason -- or fails, which is how the
+        dependency on ambient environment was found.
+        """
+        monkeypatch.delenv("QBO_CLIENT_ID", raising=False)
         with pytest.raises(SystemExit, match="QBO_CLIENT_ID is not set"):
             bootstrap._require_env("QBO_CLIENT_ID", None)
 

@@ -32,6 +32,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import getpass
 import os
 import secrets
 import sys
@@ -41,6 +42,7 @@ from urllib.parse import parse_qs, urlparse
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
+from qbo.auth import AuthClient as AuthClientRuntime  # noqa: E402
 from qbo.auth import FileTokenStore, TokenSet  # noqa: E402
 
 DEFAULT_TOKEN_STORE = "/data/qbo-tokens.json"
@@ -49,7 +51,7 @@ DEFAULT_REDIRECT_URI = "http://localhost:8000/callback"
 
 def _say(message: str = "") -> None:
     """Progress goes to stderr so --print-token leaves stdout clean."""
-    print(message, file=sys.stderr)
+    print(message, file=sys.stderr, flush=True)
 
 
 def _require_env(name: str, override: str | None = None) -> str:
@@ -88,6 +90,84 @@ async def _persist(store_path: str, tokens: TokenSet) -> None:
     await FileTokenStore(store_path).save(tokens)
 
 
+def _seed(client_id: str, client_secret: str, store_path: str) -> int:
+    """Write the token store from a refresh token obtained elsewhere.
+
+    Production apps cannot register a localhost redirect -- Intuit requires
+    HTTPS from a real web server -- so the authorization is done in Intuit's
+    OAuth Playground, whose redirect URL is registered by default. The
+    Playground performs the exchange and hands back a refresh token; this takes
+    it from there.
+
+    The token is read from a hidden prompt rather than an argument, so it stays
+    out of shell history and process listings.
+    """
+    realm_id = os.environ.get("QBO_REALM_ID", "")
+    if not realm_id:
+        raise SystemExit(
+            "FATAL: QBO_REALM_ID must be set to seed a token store. The "
+            "Playground shows it as 'Realm ID' beside the tokens."
+        )
+
+    _say("Paste the refresh token from the OAuth Playground.")
+    _say("Input is hidden and is not echoed.")
+    try:
+        token = getpass.getpass("", stream=sys.stderr).strip()
+    except (EOFError, KeyboardInterrupt):
+        _say("\nAborted.")
+        return 1
+    if not token:
+        raise SystemExit("FATAL: no refresh token entered.")
+
+    # Written with no access token, so the very next call refreshes. That is
+    # deliberate: the refresh both proves the token is live and rotates onto one
+    # this store owns, rather than leaving the Playground's copy in play.
+    seeded = TokenSet(access_token="", refresh_token=token, realm_id=realm_id)
+    asyncio.run(_persist(store_path, seeded))
+    _say(f"\nWrote {store_path} ({len(token)} char token, realm {realm_id}).")
+
+    _say("Verifying by refreshing it now...")
+    try:
+        rotated = asyncio.run(_verify(client_id, client_secret, store_path))
+    except Exception as exc:
+        _say("")
+        _say("=" * 72)
+        _say(f"The token was written but did not work: {exc}")
+        _say("")
+        _say("A Playground refresh token is single-use in the same way any")
+        _say("other is: if the Playground itself refreshed after issuing it,")
+        _say("the copy you pasted is already dead. Generate a fresh one and")
+        _say("seed again without clicking Refresh in the Playground.")
+        _say("=" * 72)
+        return 1
+
+    _say("")
+    _say("=" * 72)
+    _say("Verified. The token refreshed successfully and has been rotated, so")
+    _say("the store now holds a credential this machine owns -- the value you")
+    _say("pasted is spent and can be discarded.")
+    _say(f"  realm_id          : {rotated.realm_id}")
+    _say(f"  access token until: {rotated.access_token_expires_at}")
+    _say("=" * 72)
+    return 0
+
+
+async def _verify(client_id: str, client_secret: str, store_path: str) -> TokenSet:
+    """Force one refresh, proving the seeded token is live."""
+    store = FileTokenStore(store_path)
+    auth = AuthClientRuntime(
+        client_id=client_id, client_secret=client_secret, store=store
+    )
+    try:
+        await auth.access_token()
+    finally:
+        await auth.aclose()
+    tokens = await store.load()
+    if tokens is None:  # pragma: no cover - defensive
+        raise RuntimeError("token store vanished during verification")
+    return tokens
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Authorize the app once and seed the QuickBooks token store."
@@ -110,6 +190,16 @@ def main() -> int:
         action="store_true",
         help="Print only the refresh token to stdout; do not write the store.",
     )
+    parser.add_argument(
+        "--seed",
+        action="store_true",
+        help=(
+            "Seed the token store from a refresh token you already hold, "
+            "instead of running the authorization flow. Use this after "
+            "obtaining one from Intuit's OAuth Playground. The token is read "
+            "from a hidden prompt, never from the command line."
+        ),
+    )
     args = parser.parse_args()
 
     client_id = _require_env("QBO_CLIENT_ID", args.client_id)
@@ -120,6 +210,9 @@ def main() -> int:
     store_path = (
         args.token_store or os.environ.get("QBO_TOKEN_STORE") or DEFAULT_TOKEN_STORE
     )
+
+    if args.seed:
+        return _seed(client_id, client_secret, store_path)
 
     try:
         from intuitlib.client import AuthClient
@@ -155,8 +248,13 @@ def main() -> int:
     _say("=" * 72)
     _say()
 
+    # The prompt is written to stderr like everything else, and input() is
+    # called bare. Passing a prompt to input() sends it to stdout, which under
+    # `docker compose run` is buffered separately from stderr -- the prompt then
+    # appears above the instructions it is meant to follow.
+    _say("Paste the redirect URL (or a bare code), then press Enter:")
     try:
-        pasted = input("Redirect URL (or bare code): ")
+        pasted = input()
     except (EOFError, KeyboardInterrupt):
         _say("\nAborted.")
         return 1
